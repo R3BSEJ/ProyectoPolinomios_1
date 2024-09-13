@@ -181,6 +181,27 @@ public class Polvf1
        R.ajustar();
        return R;
    }
+   public boolean comparar(Polvf1 B) {
+
+        // Obtener el grado de ambos polinomios
+        int gradoA = (int) vec[0];
+        int gradoB = (int) B.getDato(0);
+
+        // Si los grados no son iguales, los polinomios son diferentes
+        if (gradoA != gradoB) {
+            return false;
+        }
+
+        // Comparar los coeficientes de ambos polinomios
+        for (int i = 1; i <= gradoA + 1; i++) {
+            if (vec[i] != B.getDato(i)) {
+                return false; // Si algún coeficiente es diferente, los polinomios no son iguales
+            }
+        }
+
+        // Si todos los coeficientes son iguales, los polinomios son iguales
+        return true;
+    }
 }
 
 

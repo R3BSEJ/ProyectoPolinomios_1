@@ -85,9 +85,68 @@ public class Polvf2
             }
          }
     }
-    
-    public void mostrar () {
+    public float evaluar(float x)
+    {
         int k;
-        for (k=1; k < vec[0]*2+1; k+=2)
+        float resultado = 0;
+        for(k=1; k < (vec[0]*2 + 1); k+=2)
+        {
+            resultado = (int)(resultado + vec[k+1]*Math.pow(x, vec[k]));
+        }
+        return resultado;
+        
+    }
+    
+    public void redimendionarvec(){
+        int k;
+        n=n+2;
+        float aux[]=new float[n];
+        for(k=0; (k<vec[0]*2+1); k++)
+        {
+            aux[k]=vec[k];
+        }
+        vec=aux;
+    }
+    
+    public void sumar(float coef, int exp){
+        if(coef!=0)
+        {
+            int k =1, j;
+            while((k < vec[0]*2+1) && (vec[k] > exp))
+            {
+                k = k+2;
+            }
+            
+            if((k < vec[0]*2+1) && (vec[k]==exp))
+            {
+                if((vec[k+1]+coef)!=0)
+                {
+                    vec[k+1] = vec[k+1]+coef;
+                }
+                else
+                {
+                   for(j=k; j<(vec[0]*2-1); j+=2)
+                   {
+                       vec[j] = vec[j+2];
+                       vec[j+1] = vec[j+3];
+                   }
+                   vec[0] = vec[0] -1;
+                }
+            }
+            else
+            {
+                if(vec[0]*2+1==n)
+                {
+                    redimendionarvec();
+                }
+                for(j = ((int)vec[0]*2+1); j>=k; j--)
+                {
+                    vec[j+2] = vec[j];
+                }
+                vec[k] = exp;
+                vec[k+1] = coef;
+                vec[0] = vec[0]+1;
+            }
+        }
     }
 }

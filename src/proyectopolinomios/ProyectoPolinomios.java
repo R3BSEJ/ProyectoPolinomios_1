@@ -87,9 +87,18 @@ public class ProyectoPolinomios
 //                                                        +"\nDatos del Polinomio 2\n"+B.mostrar()
 //                                                    +"\nDatos del Polinomio suma\n"+C.mostrar());
 //                break;
-//                case "6": A.comparar(B);
-//                          
-//                break;
+                case "6": 
+                    boolean a = A.comparar(B);
+                    if(a)
+                    {
+                        JOptionPane.showMessageDialog(null, "son iguales");                    
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(null, "no son iguales");
+                    }
+                          
+                break;
 //                case "7":menuPrincipal();
 //                break;
 //                case "0":System.exit(0);
@@ -126,13 +135,13 @@ public class ProyectoPolinomios
             opcion=JOptionPane.showInputDialog(null,menu);
             switch(opcion)
             {
-//                case "1":JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n"+A.mostrar()
-//                                                        +"\nDatos del Polinomio 2\n"+B.mostrar());
-//                                                    
-//                break;
-//                case "2":x=Float.parseFloat(JOptionPane.showInputDialog("Ingrese el valor de X"));
-//                      A.evaluar(x);
-//                break;
+                case "1":JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n"+A.mostrar()
+                                                        +"\nDatos del Polinomio 2\n"+B.mostrar());
+                                                    
+                break;
+                case "2":x=Float.parseFloat(JOptionPane.showInputDialog("Ingrese el valor de X"));
+                      A.evaluar(x);
+                break;
 //                case "3": C=A.sumar(B);
 //                          JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n"+A.mostrar()
 //                                                        +"\nDatos del Polinomio 2\n"+B.mostrar()

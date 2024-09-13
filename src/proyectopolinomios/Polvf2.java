@@ -108,7 +108,7 @@ public class Polvf2
         vec=aux;
     }
     
-    public void sumar(float coef, int exp){
+    public void sumarterm(float coef, int exp){
         if(coef!=0)
         {
             int k =1, j;

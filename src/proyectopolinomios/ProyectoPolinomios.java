@@ -82,11 +82,16 @@ public class ProyectoPolinomios
                                                         +"\nDatos del Polinomio 2\n"+B.mostrar()
                                                     +"\nDatos del Polinomio suma\n"+C.mostrar());
                 break;
-//               case "5": C=A.dividir(B);
-//                          JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n"+A.mostrar()
-//                                                        +"\nDatos del Polinomio 2\n"+B.mostrar()
-//                                                    +"\nDatos del Polinomio suma\n"+C.mostrar());
-//                break;
+               case "5":
+    // Realiza la división de A por B
+    C = A.dividir(B);
+    
+    // Muestra los polinomios y el resultado de la división
+    JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n" + A.mostrar()
+        + "\nDatos del Polinomio 2\n" + B.mostrar()
+        + "\nResultado de la División (Cociente)\n" + C.mostrar());
+
+                break;
                 case "6": 
                     boolean a = A.comparar(B);
                     if(a)

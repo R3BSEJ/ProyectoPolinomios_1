@@ -24,31 +24,32 @@ public class Polvf1
         return(n);
     }
     //Método para mostrar
-   public String mostrar() 
-    {
-        String salida="<html>";
-        for(int k=1;k<vec[0]+2;k++)
-        {
-            if(vec[k]!=0)
-            {
-                if(vec[k]>0&& k>1)  
-                { 
-                    salida=salida+"+";
-                }
-                salida=salida+vec[k];
-                if(vec[0]+1-k==1)     
-                { 
-                    salida=salida+"X";   
-                }
-                if((vec[0]+1-k)>1)  
-                {   
-                    salida=salida+"X<sup>"+((int)vec[0]+1-k)+"</sup>";
-                }
+  public String mostrar() {
+    String salida = "<html>";
+    
+    // Asegurarse de que no accedemos fuera de los límites del array vec
+    int grado = (int) vec[0]; // El grado del polinomio, asumido en vec[0]
+    
+    // Limitar el bucle al tamaño real del array vec
+    for (int k = 1; k < Math.min(vec.length, grado + 2); k++) {
+        if (vec[k] != 0) {
+            if (vec[k] > 0 && k > 1) { 
+                salida = salida + "+";
+            }
+            salida = salida + vec[k];
+            if (grado + 1 - k == 1) {
+                salida = salida + "X";
+            }
+            if ((grado + 1 - k) > 1) {
+                salida = salida + "X<sup>" + (grado + 1 - k) + "</sup>";
             }
         }
-        salida=salida+"</html>";
-        return salida;
     }
+    
+    salida = salida + "</html>";
+    return salida;
+}
+
     //Método para ingresar los términos del polinomio
     public void ingresarTerminos()
     {
@@ -181,6 +182,48 @@ public class Polvf1
        R.ajustar();
        return R;
    }
+   
+public Polvf1 dividir(Polvf1 divisor) {
+    int gradoDividendo = (int)vec[0];
+    int gradoDivisor = (int)divisor.getDato(0);
+    
+    // Validar si la división es posible
+    if (gradoDivisor > gradoDividendo) {
+        throw new IllegalArgumentException("El grado del divisor es mayor que el del dividendo.");
+    }
+    
+    int gradoCociente = gradoDividendo - gradoDivisor;
+    Polvf1 cociente = new Polvf1(gradoCociente);
+    
+    // Crear una copia manual del dividendo para no modificar el original
+    Object[] dividendoTemp = new Object[vec.length];
+    for (int k = 0; k < vec.length; k++) {
+        dividendoTemp[k] = vec[k];  // Copia cada elemento manualmente
+    }
+    
+    for (int i = 0; i <= gradoCociente; i++) {
+        // Validar si el índice es válido antes de acceder
+        if (i + gradoDivisor < dividendoTemp.length && ((Number)dividendoTemp[i + gradoDivisor]).doubleValue() != 0) {
+            // Calcular el coeficiente del cociente
+            cociente.vec[i] = (float) (((Number)dividendoTemp[i + gradoDivisor]).doubleValue() / ((Number)divisor.vec[gradoDivisor]).doubleValue());
+            
+            // Restar (cociente * divisor) del dividendo temporal
+            for (int j = gradoDivisor; j >= 0; j--) {
+                // Validar si el índice es válido antes de restar
+                if (i + j < dividendoTemp.length) {
+                    dividendoTemp[i + j] = ((Number)dividendoTemp[i + j]).doubleValue() - (cociente.vec[i] * ((Number)divisor.vec[j]).doubleValue());
+                } else {
+                    System.out.println("Índice fuera de rango al restar en dividendoTemp: " + (i + j));
+                }
+            }
+        } else {
+            cociente.vec[i] = 0;  // Si es 0, simplemente continuar
+        }
+    }
+    
+    return cociente;
+}
+   
    public boolean comparar(Polvf1 B) {
 
         // Obtener el grado de ambos polinomios

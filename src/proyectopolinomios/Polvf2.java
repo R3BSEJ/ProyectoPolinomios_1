@@ -97,7 +97,7 @@ public class Polvf2
         
     }
     
-    public void redimendionarvec(){
+    public void redimensionarvec(){
         int k;
         n=n+2;
         float aux[]=new float[n];
@@ -108,45 +108,74 @@ public class Polvf2
         vec=aux;
     }
     
-    public void sumarterm(float coef, int exp){
-        if(coef!=0)
-        {
-            int k =1, j;
-            while((k < vec[0]*2+1) && (vec[k] > exp))
-            {
-                k = k+2;
-            }
-            
-            if((k < vec[0]*2+1) && (vec[k]==exp))
-            {
-                if((vec[k+1]+coef)!=0)
-                {
-                    vec[k+1] = vec[k+1]+coef;
-                }
-                else
-                {
-                   for(j=k; j<(vec[0]*2-1); j+=2)
-                   {
-                       vec[j] = vec[j+2];
-                       vec[j+1] = vec[j+3];
-                   }
-                   vec[0] = vec[0] -1;
-                }
-            }
-            else
-            {
-                if(vec[0]*2+1==n)
-                {
-                    redimendionarvec();
-                }
-                for(j = ((int)vec[0]*2+1); j>=k; j--)
-                {
-                    vec[j+2] = vec[j];
-                }
-                vec[k] = exp;
-                vec[k+1] = coef;
-                vec[0] = vec[0]+1;
-            }
+    public void sumarterm(float coef, int exp) {
+    if (coef != 0) {
+        int k = 1, j;
+
+        // Buscar la posición correcta para el término
+        while (k < vec[0] * 2 + 1 && vec[k] > exp) {
+            k += 2;
         }
+
+        // Si el exponente ya existe, actualizar el coeficiente o eliminar el término
+        if (k < vec[0] * 2 + 1 && vec[k] == exp) {
+            if ((vec[k + 1] + coef) != 0) {
+                vec[k + 1] += coef;
+            } else {
+                // Eliminar el término si el coeficiente se vuelve cero
+                for (j = k; j < vec[0] * 2 - 2; j += 2) {
+                    vec[j] = vec[j + 2];
+                    vec[j + 1] = vec[j + 3];
+                }
+                vec[0]--;
+            }
+        } else {
+            // Verificar si es necesario redimensionar el vector
+            if (vec[0] * 2 + 2 >= n) {
+                redimensionarvec();
+            }
+
+            // Asegurarse de que k es un índice válido
+            if (k >= vec.length - 1) {
+                redimensionarvec();
+            }
+
+            // Mover los elementos a la derecha para hacer espacio
+            for (j = (int)vec[0] * 2 - 1; j >= k; j -= 2) {
+                vec[j + 2] = vec[j];
+                vec[j + 3] = vec[j + 1];
+            }
+
+            // Insertar el nuevo término
+            vec[k] = exp;
+            vec[k + 1] = coef;
+            vec[0]++;
+        }
+    }
+}
+
+    
+    public Polvf2 hacercopia(){
+        int k;
+        Polvf2 copia = new Polvf2((int)vec[0]);
+        for (k=1; k<vec[0]*2 + 1; k++)
+        {
+            copia.setDato(vec[k], k);
+        }
+        return (copia);
+    }
+    
+    public Polvf2 sumar(Polvf2 B){
+        
+        Polvf2 copia = this.hacercopia();
+        
+        for (int i = 1; i < B.getDato(0)*2 + 1; i +=2)
+        {
+            int exp = (int)B.getDato(i);
+            float coef = B.getDato(i + 1);
+            copia.sumarterm(coef, exp);
+        }
+        
+        return copia;
     }
 }

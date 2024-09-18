@@ -142,11 +142,11 @@ public class ProyectoPolinomios
                 case "2":x=Float.parseFloat(JOptionPane.showInputDialog("Ingrese el valor de X"));
                       A.evaluar(x);
                 break;
-//                case "3": C=A.sumar(B);
-//                          JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n"+A.mostrar()
-//                                                        +"\nDatos del Polinomio 2\n"+B.mostrar()
-//                                                    +"\nDatos del Polinomio suma\n"+C.mostrar());
-//                break;
+                case "3": C=A.sumar(B);
+                          JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n"+A.mostrar()
+                                                        +"\nDatos del Polinomio 2\n"+B.mostrar()
+                                                    +"\nDatos del Polinomio suma\n"+C.mostrar());
+                break;
 //                case "4": C=A.multiplicar(B);
 //                          JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n"+A.mostrar()
 //                                                        +"\nDatos del Polinomio 2\n"+B.mostrar()

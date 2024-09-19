@@ -80,18 +80,29 @@ public class ProyectoPolinomios
                 case "4": C=A.multiplicar(B);
                           JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n"+A.mostrar()
                                                         +"\nDatos del Polinomio 2\n"+B.mostrar()
-                                                    +"\nDatos del Polinomio suma\n"+C.mostrar());
+                                                    +"\nDatos del Polinomio multiplicar\n"+C.mostrar());
                 break;
-               case "5":
-    // Realiza la división de A por B
-    C = A.dividir(B);
-    
-    // Muestra los polinomios y el resultado de la división
-    JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n" + A.mostrar()
-        + "\nDatos del Polinomio 2\n" + B.mostrar()
-        + "\nResultado de la División (Cociente)\n" + C.mostrar());
 
-                break;
+               case "5":
+    // Verificar que B no sea el polinomio cero, para evitar la división por cero
+    if (B.esCero()) {
+        JOptionPane.showMessageDialog(null, "Error: No se puede dividir por el polinomio cero.");
+    } else {
+        // Realizar la división de A por B
+        C = A.dividir(B);
+
+        // Verificar si la división ha sido exitosa y mostrar los polinomios
+        if (C != null) {
+            JOptionPane.showMessageDialog(null, "Datos del Polinomio 1:\n" + A.mostrar()
+                + "\nDatos del Polinomio 2:\n" + B.mostrar()
+                + "\nResultado de la división:\n" + C.mostrar());
+        } else {
+            JOptionPane.showMessageDialog(null, "Error: La división no se pudo realizar.");
+        }
+    }
+    break;
+
+
                 case "6": 
                     boolean a = A.comparar(B);
                     if(a)

@@ -23,32 +23,44 @@ public class Polvf1
     public int getTamaño(){
         return(n);
     }
+
     //Método para mostrar
-  public String mostrar() {
+ public String mostrar() {
     String salida = "<html>";
-    
-    // Asegurarse de que no accedemos fuera de los límites del array vec
-    int grado = (int) vec[0]; // El grado del polinomio, asumido en vec[0]
-    
-    // Limitar el bucle al tamaño real del array vec
-    for (int k = 1; k < Math.min(vec.length, grado + 2); k++) {
+
+    // Verificar si el array tiene al menos un elemento para el grado
+    if (vec == null || vec.length == 0) {
+        return "<html>Polinomio vacío</html>";
+    }
+
+    // Obtener el grado del polinomio, almacenado en vec[0]
+    int grado = (int) vec[0];
+
+    // Asegurarse de que el array tiene suficiente tamaño para representar el polinomio
+    if (vec.length < grado + 2) {
+        return "<html>Error: tamaño del array incompatible con el grado del polinomio</html>";
+    }
+
+    // Iterar sobre los coeficientes asegurándonos de que no se salga del tamaño del array
+    for (int k = 1; k <= grado; k++) {
         if (vec[k] != 0) {
             if (vec[k] > 0 && k > 1) { 
-                salida = salida + "+";
+                salida += "+";
             }
-            salida = salida + vec[k];
+            salida += vec[k];
             if (grado + 1 - k == 1) {
-                salida = salida + "X";
-            }
-            if ((grado + 1 - k) > 1) {
-                salida = salida + "X<sup>" + (grado + 1 - k) + "</sup>";
+                salida += "X";
+            } else if (grado + 1 - k > 1) {
+                salida += "X<sup>" + (grado + 1 - k) + "</sup>";
             }
         }
     }
-    
-    salida = salida + "</html>";
+
+    salida += "</html>";
     return salida;
 }
+
+
 
     //Método para ingresar los términos del polinomio
     public void ingresarTerminos()
@@ -85,7 +97,7 @@ public class Polvf1
                resp="S";
            }
        }
-    }
+    }    
 
      //evaluar el polinomio
     public void evaluar(float x)
@@ -97,24 +109,8 @@ public class Polvf1
         }
         JOptionPane.showMessageDialog(null, "El resultado es "+ resultado);
     }
-
- //Método para ajustar los ceros 
-    public void ajustar()
-    {
-        int k=1, j, cont=0;
-        while(k<vec[0]+2 && vec[k]==0)
-        {
-            cont=cont+1;
-            k++;
-        }
-        for(j=k;j<vec[0]+2;j++)
-        {
-            vec[j-cont]=vec[j];
-        }
-        vec[0]=vec[0]-cont;
-    }
     
-   //Método para sumar dos polinomios
+    //Método para sumar dos polinomios
    public Polvf1 sumar(Polvf1 B)
    {
        int k = 1, j = 1,mayor, ExpA, ExpB, PosR;
@@ -181,49 +177,50 @@ public class Polvf1
        }
        R.ajustar();
        return R;
-   }
+   }  
    
-public Polvf1 dividir(Polvf1 divisor) {
-    int gradoDividendo = (int)vec[0];
-    int gradoDivisor = (int)divisor.getDato(0);
-    
-    // Validar si la división es posible
-    if (gradoDivisor > gradoDividendo) {
-        throw new IllegalArgumentException("El grado del divisor es mayor que el del dividendo.");
+
+   //Metodo para dividir
+   public Polvf1 dividir(Polvf1 divisor) {
+    // Verificar si el grado del divisor es mayor que el grado del dividendo
+    if (divisor.vec[0] > vec[0]) {
+        throw new IllegalArgumentException("El grado del divisor es mayor que el grado del dividendo.");
     }
-    
-    int gradoCociente = gradoDividendo - gradoDivisor;
+
+    // Crear el polinomio cociente
+    int gradoCociente = (int) vec[0] - (int) divisor.vec[0];
     Polvf1 cociente = new Polvf1(gradoCociente);
-    
-    // Crear una copia manual del dividendo para no modificar el original
-    Object[] dividendoTemp = new Object[vec.length];
-    for (int k = 0; k < vec.length; k++) {
-        dividendoTemp[k] = vec[k];  // Copia cada elemento manualmente
-    }
-    
-    for (int i = 0; i <= gradoCociente; i++) {
-        // Validar si el índice es válido antes de acceder
-        if (i + gradoDivisor < dividendoTemp.length && ((Number)dividendoTemp[i + gradoDivisor]).doubleValue() != 0) {
-            // Calcular el coeficiente del cociente
-            cociente.vec[i] = (float) (((Number)dividendoTemp[i + gradoDivisor]).doubleValue() / ((Number)divisor.vec[gradoDivisor]).doubleValue());
-            
-            // Restar (cociente * divisor) del dividendo temporal
-            for (int j = gradoDivisor; j >= 0; j--) {
-                // Validar si el índice es válido antes de restar
-                if (i + j < dividendoTemp.length) {
-                    dividendoTemp[i + j] = ((Number)dividendoTemp[i + j]).doubleValue() - (cociente.vec[i] * ((Number)divisor.vec[j]).doubleValue());
-                } else {
-                    System.out.println("Índice fuera de rango al restar en dividendoTemp: " + (i + j));
-                }
-            }
-        } else {
-            cociente.vec[i] = 0;  // Si es 0, simplemente continuar
+
+    // Crear una copia del polinomio dividendo para trabajar con él
+        float[] dividendo = vec.clone();
+
+    // Realizar la división polinómica
+    for (int i = 1; i <= gradoCociente + 1; i++) {
+        // Calcular el coeficiente actual del cociente (dividiendo los términos líderes)
+        cociente.vec[i] = dividendo[i] / divisor.vec[1];
+
+        // Restar el término multiplicado al dividendo
+        for (int j = 1; j < divisor.vec.length && (i + j - 1) < dividendo.length; j++) {
+            dividendo[i + j - 1] -= cociente.vec[i] * divisor.vec[j];
         }
     }
-    
+
+    // Ajustar el polinomio cociente y devolverlo
+    cociente.ajustar();
     return cociente;
 }
    
+   public boolean esCero() {
+    for (int i = 1; i < vec.length; i++) {
+        if (vec[i] != 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
    public boolean comparar(Polvf1 B) {
 
         // Obtener el grado de ambos polinomios
@@ -245,6 +242,28 @@ public Polvf1 dividir(Polvf1 divisor) {
         // Si todos los coeficientes son iguales, los polinomios son iguales
         return true;
     }
+ //Método para ajustar los ceros 
+    public void ajustar()
+    {
+        int k=1, j, cont=0;
+        while(k<vec[0]+2 && vec[k]==0)
+        {
+            cont=cont+1;
+            k++;
+        }
+        for(j=k;j<vec[0]+2;j++)
+        {
+            vec[j-cont]=vec[j];
+        }
+        vec[0]=vec[0]-cont;
+    }
+
+    Object getVec() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    
+    
 }
 
 

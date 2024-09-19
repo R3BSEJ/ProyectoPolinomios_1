@@ -178,4 +178,67 @@ public class Polvf2
         
         return copia;
     }
+    
+    public Polvf2 sumarPolinomios(Polvf1 pol1, PolLista pol2) {
+    // Obtenemos el grado máximo entre ambos polinomios
+    int gradoMax = Math.max((int) pol1.getVec()[0], pol2.getMaxExp());
+    // Creamos el polinomio resultante en forma vector 2
+    Polvf2 resultado = new Polvf2(gradoMax);
+    
+    // Sumar los términos del polinomio en forma 1 (vector forma 1)
+    for (int i = 1; i < pol1.getVec().length; i++) {
+        int exp = (int) pol1.getVec()[0] + 1 - i;
+        float coef = pol1.getVec()[i];
+        
+        if (coef != 0) {
+            // Ingresar en el polinomio resultado en forma 2
+            resultado.ingresarTermino(exp, coef);
+        }
+    }
+    
+    // Sumar los términos del polinomio en lista
+    Nodo p = pol2.getCab();  // Obtenemos la cabeza de la lista
+    while (p != null) {
+        int exp = p.getExp();
+        float coef = p.getCoef();
+        
+        // Ingresar en el polinomio resultado en forma 2
+        resultado.ingresarTermino(exp, coef);
+        
+        // Avanzar al siguiente nodo en la lista
+        p = p.getLiga();
+    }
+    
+    return resultado;
+}
+
+    public void ingresarTermino(int exp, float coef) {
+    int k = 1;
+    // Buscar la posición correcta para insertar el término
+    while (k < vec[0] * 2 + 1 && vec[k] > exp) {
+        k = k + 2;
+    }
+    // Si el término ya existe, sumamos los coeficientes
+    if (k < vec[0] * 2 + 1 && vec[k] == exp) {
+        vec[k + 1] += coef;
+    } else {
+        // Si no existe, insertamos el nuevo término
+        for (int j = (int) vec[0] * 2 - 1; j > k; j--) {
+            vec[j + 1] = vec[j - 1];
+        }
+        vec[k] = exp;
+        vec[k + 1] = coef;
+    }
+}
+
+    private static class PolLista {
+
+        public PolLista() {
+        }
+
+        private int getMaxExp() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+    }
+
 }

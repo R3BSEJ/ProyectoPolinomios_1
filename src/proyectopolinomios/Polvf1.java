@@ -262,8 +262,59 @@ public class Polvf1
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    //lau
+    /**
+     *
+     * @param pol1
+     * @param pol2
+     * @return
+     */
+    /**    public Polvf2 SumarPolinomios(Polvf1 pol1, PolLista pol2) {
+    // Obtenemos el grado máximo entre ambos polinomios
+    int gradoMax = Math.max((int) Polvf1.getVec()[0], PolLista.getMaxExp());
+    // Creamos el polinomio resultante en forma vector 2
+    Polvf2 resultado = new Polvf2(gradoMax);
     
+    // Sumar los términos del polinomio en forma 1 (vector forma 1)
+    for (int i = 1; i < pol1.getVec().length; i++) {
+        int exp = (int) pol1.getVec()[0] + 1 - i;
+        float coef = pol1.getVec()[i];
+        
+        if (coef != 0) {
+            // Ingresar en el polinomio resultado en forma 2
+            resultado.ingresarTerminos(exp, coef);
+        }
+    }
+    
+    // Sumar los términos del polinomio en lista
+    Nodo p = pol2.getCab();  // Obtenemos la cabeza de la lista
+    while (p != null) {
+        int exp = p.getExp();
+        float coef = p.getCoef();
+        
+        // Ingresar en el polinomio resultado en forma 2
+        resultado.ingresarTerminos(exp, coef);
+        
+        // Avanzar al siguiente nodo en la lista
+        p = p.getLiga();
+    }
+    
+    return resultado;
+}
+
+    private static class PolLista {
+
+        public PolLista() {
+        }
+
+        private int getMaxExp() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        private Nodo getCab() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+    }
+    **/
 }
 
 

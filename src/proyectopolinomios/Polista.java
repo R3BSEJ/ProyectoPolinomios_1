@@ -1,4 +1,4 @@
-package proyectopolinomios;
+    package proyectopolinomios;
 
 import javax.swing.JOptionPane;
 
@@ -6,8 +6,12 @@ public class Polista {
 
     private Nodo cab;
 
-    public Polista() {
+    public Polista(int canterm) {
         cab = null;
+    }
+
+    Polista() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public Nodo getCab() {
@@ -46,7 +50,8 @@ public class Polista {
     }
 
     public Polista sumar(Polista B) {
-        Polista C = new Polista();
+        int canterm;
+        Polista C = new Polista(canterm);
         Nodo p1 = this.cab;
         Nodo p2 = B.getCab();
         Nodo x, ant = null;
@@ -77,7 +82,7 @@ public class Polista {
         return C;
     }
 
-    public void ingresarTerminos() {
+    public void ingresarTerminos(int canterm) {
         int exp;
         float coef;
         Nodo p, ant, x;
@@ -111,4 +116,72 @@ public class Polista {
             respuesta = JOptionPane.showInputDialog("Desea ingresar término? S/N");
         }
     }
+    
+    public Polista multiplicar(Polista B) {
+    Polista C = new Polista(canterm);  // El polinomio resultante
+    Nodo p1 = this.cab;         // Nodo para recorrer el primer polinomio
+
+    // Recorremos el primer polinomio
+    while (p1 != null) {
+        Nodo p2 = B.getCab();   // Nodo para recorrer el segundo polinomio
+        // Recorremos el segundo polinomio para multiplicar cada término con p1
+        while (p2 != null) {
+            int nuevoExp = p1.getExp() + p2.getExp();  // Sumar exponentes
+            float nuevoCoef = p1.getCoef() * p2.getCoef();  // Multiplicar coeficientes
+            C.insertarOrdenado(nuevoExp, nuevoCoef);   // Insertar en el polinomio resultante
+            p2 = p2.getLiga();  // Avanzar en el segundo polinomio
+        }
+        p1 = p1.getLiga();  // Avanzar en el primer polinomio
+    }
+    return C;
+}
+
+// Método auxiliar para insertar términos de forma ordenada por exponente
+public void insertarOrdenado(int exp, float coef) {
+    if (coef == 0) {
+        return;  // No insertamos términos con coeficiente 0
+    }
+    
+    Nodo nuevoTermino = new Nodo(exp, coef);
+    Nodo p = this.cab;
+    Nodo ant = null;
+
+    // Encontrar la posición donde insertar el nuevo término
+    while (p != null && p.getExp() > exp) {
+        ant = p;
+        p = p.getLiga();
+    }
+    
+    // Si ya existe un término con el mismo exponente, sumamos los coeficientes
+    if (p != null && p.getExp() == exp) {
+        p.setCoef(p.getCoef() + coef);
+        if (p.getCoef() == 0) { // Si el coeficiente es 0 después de la suma, eliminamos el término
+            if (ant == null) {
+                this.cab = p.getLiga();  // Eliminar el primer nodo
+            } else {
+                ant.setLiga(p.getLiga());  // Eliminar el nodo actual
+            }
+        }
+    } else {
+        // Insertar el nuevo término en la posición correcta
+        if (ant == null) {
+            // Insertar al inicio
+            nuevoTermino.setLiga(this.cab);
+            this.cab = nuevoTermino;
+        } else {
+            // Insertar en el medio o al final
+            nuevoTermino.setLiga(p);
+            ant.setLiga(nuevoTermino);
+        }
+    }
+}
+
+    Polista dividir(Polista B) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    boolean comparar(Polista B) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

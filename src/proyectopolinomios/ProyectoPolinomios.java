@@ -2,6 +2,8 @@ package proyectopolinomios;
 import javax.swing.JOptionPane;
 public class ProyectoPolinomios 
 {
+
+    private static int canterm;
     public static void main(String[] args) 
     {
        menuPrincipal();      
@@ -56,6 +58,7 @@ public class ProyectoPolinomios
                             "4-	Multiplicar\n" +
                             "5-	Dividir\n" +
                             "6-	Comparar\n" +
+                            "7- Sumar Polinomios\n"+
                             "7- Ir al menú principal\n"+
                             "0-	Salir\n" +
                             "Digite la opción";
@@ -115,7 +118,9 @@ public class ProyectoPolinomios
                     }
                           
                 break;
-//                case "7":menuPrincipal();
+             //   case "7":SumarPolinomios();
+             //    break;
+//                case "8":menuPrincipal();
 //                break;
 //                case "0":System.exit(0);
             }
@@ -185,58 +190,58 @@ public class ProyectoPolinomios
      }
    
 public static void menuPolista() {
-    Polista A = new Polista();
-    Polista B = new Polista();
-    Polista C;
-    float x;
+ 
+    Polista A, B, C;  // Polinomios
+    int canterm;      // Cantidad de términos
+    float x;          // Valor para evaluar los polinomios
+    String opcion;
 
-    String opcion, menu = "♦♣POLINOMIOS EN VECTOR FORMA 3(Lista)♣♦\n" +
-                          "1- Mostrar\n" +
-                          "2- Evaluar\n" +
-                          "3- Sumar\n" +
-                          "4- Multiplicar\n" +
-                          "5- Dividir\n" +
-                          "6- Comparar\n" +
-                          "7- Ir al menú principal\n" +
-                          "0- Salir\n" +
-                          "Digite la opción";
+    // Ingresar el primer polinomio
+    canterm = Integer.parseInt(JOptionPane.showInputDialog("¿Cuántos términos tiene el polinomio 1?"));
+    A = new Polista();  // Crear una nueva instancia de Polista
+    A.ingresarTerminos(canterm);  // Ingresar términos para el primer polinomio
 
-    do {
-        opcion = JOptionPane.showInputDialog(null, menu);
+    // Ingresar el segundo polinomio
+    canterm = Integer.parseInt(JOptionPane.showInputDialog("¿Cuántos términos tiene el polinomio 2?"));
+    B = new Polista();  // Crear una nueva instancia de Polista
+    B.ingresarTerminos(canterm);  // Ingresar términos para el segundo polinomio
+    
+
+     do {
+        opcion = JOptionPane.showInputDialog("""
+                                             Seleccione una opci\u00f3n:
+                                             1. Sumar los polinomios
+                                             2. Multiplicar los polinomios
+                                             3. Evaluar polinomio 1
+                                             4. Evaluar polinomio 2
+                                             5. Salir""");
         switch (opcion) {
-            case "1":
-                JOptionPane.showMessageDialog(null, "Datos del Polinomio 1\n" + A.mostrar()
+            case "1" -> JOptionPane.showMessageDialog(null, "Datos del Polinomio 1\n" + A.mostrar()
                         + "\nDatos del Polinomio 2\n" + B.mostrar());
-                break;
-            case "2":
+            case "2" -> {
                 x = Float.parseFloat(JOptionPane.showInputDialog("Ingrese el valor de X"));
                 JOptionPane.showMessageDialog(null, "Evaluación de A: " + A.evaluar(x)
                         + "\nEvaluación de B: " + B.evaluar(x));
-                break;
-            case "3":
+            }
+            case "3" -> {
                 C = A.sumar(B);
                 JOptionPane.showMessageDialog(null, "Datos del Polinomio suma\n" + C.mostrar());
-                break;
-            case "4":
+            }
+            case "4" -> {
                 C = A.multiplicar(B);
                 JOptionPane.showMessageDialog(null, "Datos del Polinomio multiplicado\n" + C.mostrar());
-                break;
-            case "5":
+            }
+            case "5" -> {
                 C = A.dividir(B);
                 JOptionPane.showMessageDialog(null, "Datos del Polinomio división\n" + C.mostrar());
-                break;
-            case "6":
+            }
+            case "6" -> {
                 boolean iguales = A.comparar(B);
                 JOptionPane.showMessageDialog(null, "¿Son iguales? " + (iguales ? "Sí" : "No"));
-                break;
-            case "7":
-                menuPrincipal();
-                break;
-            case "0":
-                System.exit(0);
-                break;
-            default:
-                JOptionPane.showMessageDialog(null, "Opción no válida");
+            }
+            case "7" -> menuPrincipal();
+            case "0" -> System.exit(0);
+            default -> JOptionPane.showMessageDialog(null, "Opción no válida");
         }
 
     } while (!opcion.equals("0"));

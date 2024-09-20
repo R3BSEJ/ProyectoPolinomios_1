@@ -23,32 +23,45 @@ public class Polvf1
     public int getTamaño(){
         return(n);
     }
+
     //Método para mostrar
-   public String mostrar() 
-    {
-        String salida="<html>";
-        for(int k=1;k<vec[0]+2;k++)
-        {
-            if(vec[k]!=0)
-            {
-                if(vec[k]>0&& k>1)  
-                { 
-                    salida=salida+"+";
-                }
-                salida=salida+vec[k];
-                if(vec[0]+1-k==1)     
-                { 
-                    salida=salida+"X";   
-                }
-                if((vec[0]+1-k)>1)  
-                {   
-                    salida=salida+"X<sup>"+((int)vec[0]+1-k)+"</sup>";
-                }
+ public String mostrar() {
+    String salida = "<html>";
+
+    // Verificar si el array tiene al menos un elemento para el grado
+    if (vec == null || vec.length == 0) {
+        return "<html>Polinomio vacío</html>";
+    }
+
+    // Obtener el grado del polinomio, almacenado en vec[0]
+    int grado = (int) vec[0];
+
+    // Asegurarse de que el array tiene suficiente tamaño para representar el polinomio
+    if (vec.length < grado + 2) {
+        return "<html>Error: tamaño del array incompatible con el grado del polinomio</html>";
+    }
+
+    // Iterar sobre los coeficientes asegurándonos de que no se salga del tamaño del array
+    for (int k = 1; k <= grado; k++) {
+        if (vec[k] != 0) {
+            if (vec[k] > 0 && k > 1) { 
+                salida += "+";
+            }
+            salida += vec[k];
+            if (grado + 1 - k == 1) {
+                salida += "X";
+            } else if (grado + 1 - k > 1) {
+                salida += "X<sup>" + (grado + 1 - k) + "</sup>";
             }
         }
-        salida=salida+"</html>";
-        return salida;
     }
+
+    salida += "</html>";
+    return salida;
+}
+
+
+
     //Método para ingresar los términos del polinomio
     public void ingresarTerminos()
     {
@@ -84,7 +97,7 @@ public class Polvf1
                resp="S";
            }
        }
-    }
+    }    
 
      //evaluar el polinomio
     public void evaluar(float x)
@@ -96,24 +109,8 @@ public class Polvf1
         }
         JOptionPane.showMessageDialog(null, "El resultado es "+ resultado);
     }
-
- //Método para ajustar los ceros 
-    public void ajustar()
-    {
-        int k=1, j, cont=0;
-        while(k<vec[0]+2 && vec[k]==0)
-        {
-            cont=cont+1;
-            k++;
-        }
-        for(j=k;j<vec[0]+2;j++)
-        {
-            vec[j-cont]=vec[j];
-        }
-        vec[0]=vec[0]-cont;
-    }
     
-   //Método para sumar dos polinomios
+    //Método para sumar dos polinomios
    public Polvf1 sumar(Polvf1 B)
    {
        int k = 1, j = 1,mayor, ExpA, ExpB, PosR;
@@ -201,7 +198,50 @@ public class Polvf1
    }
        R.ajustar();
        return R;
-   }
+   }  
+   
+
+   //Metodo para dividir
+   public Polvf1 dividir(Polvf1 divisor) {
+    // Verificar si el grado del divisor es mayor que el grado del dividendo
+    if (divisor.vec[0] > vec[0]) {
+        throw new IllegalArgumentException("El grado del divisor es mayor que el grado del dividendo.");
+    }
+
+    // Crear el polinomio cociente
+    int gradoCociente = (int) vec[0] - (int) divisor.vec[0];
+    Polvf1 cociente = new Polvf1(gradoCociente);
+
+    // Crear una copia del polinomio dividendo para trabajar con él
+        float[] dividendo = vec.clone();
+
+    // Realizar la división polinómica
+    for (int i = 1; i <= gradoCociente + 1; i++) {
+        // Calcular el coeficiente actual del cociente (dividiendo los términos líderes)
+        cociente.vec[i] = dividendo[i] / divisor.vec[1];
+
+        // Restar el término multiplicado al dividendo
+        for (int j = 1; j < divisor.vec.length && (i + j - 1) < dividendo.length; j++) {
+            dividendo[i + j - 1] -= cociente.vec[i] * divisor.vec[j];
+        }
+    }
+
+    // Ajustar el polinomio cociente y devolverlo
+    cociente.ajustar();
+    return cociente;
+}
+   
+   public boolean esCero() {
+    for (int i = 1; i < vec.length; i++) {
+        if (vec[i] != 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
    public boolean comparar(Polvf1 B) {
 
         // Obtener el grado de ambos polinomios
@@ -223,6 +263,79 @@ public class Polvf1
         // Si todos los coeficientes son iguales, los polinomios son iguales
         return true;
     }
+ //Método para ajustar los ceros 
+    public void ajustar()
+    {
+        int k=1, j, cont=0;
+        while(k<vec[0]+2 && vec[k]==0)
+        {
+            cont=cont+1;
+            k++;
+        }
+        for(j=k;j<vec[0]+2;j++)
+        {
+            vec[j-cont]=vec[j];
+        }
+        vec[0]=vec[0]-cont;
+    }
+
+    Object getVec() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    /**
+     *
+     * @param pol1
+     * @param pol2
+     * @return
+     */
+    /**    public Polvf2 SumarPolinomios(Polvf1 pol1, PolLista pol2) {
+    // Obtenemos el grado máximo entre ambos polinomios
+    int gradoMax = Math.max((int) Polvf1.getVec()[0], PolLista.getMaxExp());
+    // Creamos el polinomio resultante en forma vector 2
+    Polvf2 resultado = new Polvf2(gradoMax);
+    
+    // Sumar los términos del polinomio en forma 1 (vector forma 1)
+    for (int i = 1; i < pol1.getVec().length; i++) {
+        int exp = (int) pol1.getVec()[0] + 1 - i;
+        float coef = pol1.getVec()[i];
+        
+        if (coef != 0) {
+            // Ingresar en el polinomio resultado en forma 2
+            resultado.ingresarTerminos(exp, coef);
+        }
+    }
+    
+    // Sumar los términos del polinomio en lista
+    Nodo p = pol2.getCab();  // Obtenemos la cabeza de la lista
+    while (p != null) {
+        int exp = p.getExp();
+        float coef = p.getCoef();
+        
+        // Ingresar en el polinomio resultado en forma 2
+        resultado.ingresarTerminos(exp, coef);
+        
+        // Avanzar al siguiente nodo en la lista
+        p = p.getLiga();
+    }
+    
+    return resultado;
+}
+
+    private static class PolLista {
+
+        public PolLista() {
+        }
+
+        private int getMaxExp() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        private Nodo getCab() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+    }
+    **/
 }
 
 

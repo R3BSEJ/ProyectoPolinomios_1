@@ -190,7 +190,6 @@ public class ProyectoPolinomios
      }
    
 public static void menuPolista() {
- 
     Polista A, B, C;  // Polinomios
     int canterm;      // Cantidad de términos
     float x;          // Valor para evaluar los polinomios
@@ -198,23 +197,27 @@ public static void menuPolista() {
 
     // Ingresar el primer polinomio
     canterm = Integer.parseInt(JOptionPane.showInputDialog("¿Cuántos términos tiene el polinomio 1?"));
-    A = new Polista();  // Crear una nueva instancia de Polista
+    A = new Polista();  // Crear una nueva instancia de Polista sin parámetros
     A.ingresarTerminos(canterm);  // Ingresar términos para el primer polinomio
 
     // Ingresar el segundo polinomio
     canterm = Integer.parseInt(JOptionPane.showInputDialog("¿Cuántos términos tiene el polinomio 2?"));
-    B = new Polista();  // Crear una nueva instancia de Polista
+    B = new Polista();  // Crear una nueva instancia de Polista sin parámetros
     B.ingresarTerminos(canterm);  // Ingresar términos para el segundo polinomio
-    
 
-     do {
-        opcion = JOptionPane.showInputDialog("""
-                                             Seleccione una opci\u00f3n:
-                                             1. Sumar los polinomios
-                                             2. Multiplicar los polinomios
-                                             3. Evaluar polinomio 1
-                                             4. Evaluar polinomio 2
-                                             5. Salir""");
+    // Menú de opciones para operar con los polinomios
+    do {
+        opcion = JOptionPane.showInputDialog("Seleccione una opción:\n"
+                + "1-	Mostrar\n" +
+                            "2-	Evaluar\n" +
+                            "3-	Sumar\n" +
+                            "4-	Multiplicar\n" +
+                            "5-	Dividir\n" +
+                            "6-	Comparar\n" +
+                            "7- Ir al menú principal\n"+
+                            "0-	Salir\n" +
+                            "Digite la opción");
+
         switch (opcion) {
             case "1" -> JOptionPane.showMessageDialog(null, "Datos del Polinomio 1\n" + A.mostrar()
                         + "\nDatos del Polinomio 2\n" + B.mostrar());

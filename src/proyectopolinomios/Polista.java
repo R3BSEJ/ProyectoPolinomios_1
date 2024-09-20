@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 public class Polista {
 
     private Nodo cab;
+    private int canterm;
 
     public Polista(int canterm) {
         cab = null;
@@ -50,7 +51,7 @@ public class Polista {
     }
 
     public Polista sumar(Polista B) {
-        int canterm;
+
         Polista C = new Polista(canterm);
         Nodo p1 = this.cab;
         Nodo p2 = B.getCab();

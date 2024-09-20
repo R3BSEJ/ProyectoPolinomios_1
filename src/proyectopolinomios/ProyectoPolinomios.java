@@ -17,7 +17,7 @@ public class ProyectoPolinomios
                             "0-	Salir\n" +
                             "Digite la opción";
         
-        //camaron//
+        //camaron tintin//
         do
         {
             opcion=JOptionPane.showInputDialog(null,menu);
@@ -119,7 +119,7 @@ public class ProyectoPolinomios
        B=new Polvf2(canterm) ; 
        B.ingresarTerminos(canterm);
        
-       String opcion, menu="♦♣POLINOMIOS EN VECTOR FORMA 1♣♦\n" +
+       String opcion, menu="♦♣POLINOMIOS EN VECTOR FORMA 2♣♦\n" +
                             "1-	Mostrar\n" +
                             "2-	Evaluar\n" +
                             "3-	Sumar\n" +
@@ -135,13 +135,20 @@ public class ProyectoPolinomios
             opcion=JOptionPane.showInputDialog(null,menu);
             switch(opcion)
             {
+<<<<<<< Updated upstream
                 case "1":JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n"+A.mostrar()
                                                         +"\nDatos del Polinomio 2\n"+B.mostrar());
                                                     
+=======
+/*                case "1":JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n"+A.mostrar()
+                                                        +"\nDatos del Polinomio 2\n"+B.mostrar());
+
+>>>>>>> Stashed changes
                 break;
                 case "2":x=Float.parseFloat(JOptionPane.showInputDialog("Ingrese el valor de X"));
                       A.evaluar(x);
                 break;
+<<<<<<< Updated upstream
 //                case "3": C=A.sumar(B);
 //                          JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n"+A.mostrar()
 //                                                        +"\nDatos del Polinomio 2\n"+B.mostrar()
@@ -160,10 +167,30 @@ public class ProyectoPolinomios
 //                case "6": A.comparar(B);
 //                          
 //                break;
+=======
+                case "3": C=A.sumar(B);
+                          JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n"+A.mostrar()
+                                                        +"\nDatos del Polinomio 2\n"+B.mostrar()
+                                                    +"\nDatos del Polinomio suma\n"+C.mostrar());
+                break;
+                case "4": C=A.multiplicar(B);
+                          JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n"+A.mostrar()
+                                                       +"\nDatos del Polinomio 2\n"+B.mostrar()
+                                                  +"\nDatos del Polinomio suma\n"+C.mostrar());
+                break;
+              case "5": C=A.dividir(B);
+                          JOptionPane.showMessageDialog(null,"Datos del Polinomio 1\n"+A.mostrar()
+                                                        +"\nDatos del Polinomio 2\n"+B.mostrar()
+                                                    +"\nDatos del Polinomio suma\n"+C.mostrar());
+                break;
+                case "6": A.comparar(B);
+
+               break;
+>>>>>>> Stashed changes
                 case "7":menuPrincipal();
                 break;
                 case "0":System.exit(0);
-            }
+            } */
          
         }while(!opcion.equals("0"));
      }
